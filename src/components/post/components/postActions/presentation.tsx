@@ -2,8 +2,12 @@
 
 import { Heart, MessageCircle, Send } from "lucide-react";
 import { PostActionsProps } from "./container";
+import toast from "react-hot-toast";
 
 function Component({ isLiked, onLike, onCommentToggle }: PostActionsProps) {
+    function onClickSend() {
+        toast.error("Feature not implemented yet");
+    }
     return (
         <div className="flex items-center ">
             <button
@@ -34,7 +38,10 @@ function Component({ isLiked, onLike, onCommentToggle }: PostActionsProps) {
             </button>
 
             <button className="flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors text-gray-500">
-                <Send size={20} />
+                <Send
+                    size={20}
+                    onClick={onClickSend}
+                />
             </button>
         </div>
     );

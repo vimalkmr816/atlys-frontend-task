@@ -52,7 +52,7 @@ function Container({ onPostCreated }: CreatePostContainerProps) {
         e.preventDefault();
 
         if (!isLoggedIn) {
-            setIsLoginModalOpen(true);
+            setIsLoginModalOpen({ signIn: true, signUp: false });
             return;
         }
 

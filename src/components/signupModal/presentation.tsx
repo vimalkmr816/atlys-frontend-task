@@ -1,6 +1,6 @@
 "use client";
 
-import { Modal, PasswordInput, TextInput } from "@mantine/core";
+import { Modal } from "@mantine/core";
 import { Loader } from "lucide-react";
 import { useAuth } from "../provider/auth";
 import { FormAction, FormState, LoginModalProps } from "./container";
