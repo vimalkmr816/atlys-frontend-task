@@ -7,7 +7,8 @@ While this project provides a solid foundation, there are several areas where it
 -   **Authentication Architecture**: Integrate a more robust authentication system with proper JWT handling, refresh tokens, and secure session management
 -   **Error Logging**: Implement more verbose error logging with proper error boundaries, logging services, and user-friendly error messages
 -   **UI/UX Enhancements**: Add more animations, micro-interactions, and smoother transitions to create a more polished and engaging user experience
-    This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
