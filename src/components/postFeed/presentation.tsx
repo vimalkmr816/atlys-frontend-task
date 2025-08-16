@@ -21,6 +21,7 @@ function Component({
                 onPostCreated={onPostCreated}
                 onLoginClick={onLoginClick}
             />
+
             <PostList posts={posts} />
         </div>
     );

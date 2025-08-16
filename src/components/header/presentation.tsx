@@ -1,27 +1,26 @@
 "use client";
 
-import { useLocalStorage } from "@mantine/hooks";
+import { useAuth } from "@/src/components/provider/auth";
 import { Button } from "@mantine/core";
 import { LogIn, LogOut, Mouse } from "lucide-react";
-import { useAuth } from "@/src/components/provider/auth";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Component = () => {
-    const { isLoggedIn, username, logout } = useAuth();
+    const { username, logout } = useAuth();
     const [isloading, setIsLoading] = useState(false);
-
-    const [, setIsLoginModalOpen] = useLocalStorage({
-        key: "isLoginModalOpen",
-    });
-
-    const openLoginModal = () => setIsLoginModalOpen("true");
 
     const handleLogout = async () => {
         try {
             setIsLoading(true);
             await logout();
-        } catch (error) {
-            console.log("======== ~ error:", error);
+            toast.success("Logout successful");
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } catch (error: unknown) {
+            toast.error("Logout failed");
         } finally {
             setIsLoading(false);
         }
@@ -44,33 +43,11 @@ const Component = () => {
                         </h1>
                     </div>
 
-                    <div className="flex items-center space-x-3">
-                        {isLoggedIn ? (
-                            <div className="flex items-center gap-3">
-                                <span className="text-sm text-gray-700">
-                                    Welcome, {username}!
-                                </span>
-                                <Button
-                                    variant="transparent"
-                                    color="red"
-                                    leftSection={<LogOut size={16} />}
-                                    onClick={handleLogout}
-                                    loading={isloading}
-                                >
-                                    Logout
-                                </Button>
-                            </div>
-                        ) : (
-                            <Button
-                                onClick={openLoginModal}
-                                variant="transparent"
-                                color="purple"
-                                leftSection={<LogIn size={16} />}
-                            >
-                                Login
-                            </Button>
-                        )}
-                    </div>
+                    <RightIcon
+                        username={username}
+                        handleLogout={handleLogout}
+                        isloading={isloading}
+                    />
                 </div>
             </div>
         </header>
@@ -78,3 +55,65 @@ const Component = () => {
 };
 
 export default Component;
+
+function RightIcon({
+    handleLogout,
+    isloading,
+}: {
+    username: string;
+    handleLogout: () => void;
+    isloading: boolean;
+}) {
+    const { isLoggedIn, username, setIsLoginModalOpen } = useAuth();
+    const pathname = usePathname();
+    const router = useRouter();
+
+    if (pathname === "/signin" || pathname === "/signup") {
+        return (
+            <div className="flex items-center space-x-3">
+                <Button
+                    variant="transparent"
+                    color="black"
+                    className="cursor-pointer"
+                    onClick={() => router.push("/")}
+                >
+                    Back to Home
+                </Button>
+            </div>
+        );
+    }
+    return (
+        <div className="flex items-center space-x-3">
+            {isLoggedIn ? (
+                <div className="flex items-center gap-3">
+                    <span className="text-sm text-gray-700">
+                        Welcome, {username}!
+                    </span>
+                    <Button
+                        variant="transparent"
+                        color="red"
+                        leftSection={<LogOut size={16} />}
+                        onClick={handleLogout}
+                        loading={isloading}
+                    >
+                        Logout
+                    </Button>
+                </div>
+            ) : (
+                <Button
+                    onClick={() =>
+                        setIsLoginModalOpen({
+                            signIn: true,
+                            signUp: false,
+                        })
+                    }
+                    variant="transparent"
+                    color="purple"
+                    leftSection={<LogIn size={16} />}
+                >
+                    Login
+                </Button>
+            )}
+        </div>
+    );
+}

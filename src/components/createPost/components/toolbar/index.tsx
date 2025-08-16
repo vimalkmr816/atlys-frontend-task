@@ -135,80 +135,14 @@ export default function Toolbar({
                         </button>
                     </div>
 
-                    <div className="flex justify-between w-full items-start gap-4">
-                        {/* Emoji Selection */}
-                        <div className="flex items-center gap-2">
-                            {selectedEmoji ? (
-                                <div className="flex items-center">
-                                    <span className="text-2xl">
-                                        {selectedEmoji}
-                                    </span>
-                                    <button
-                                        onClick={removeEmoji}
-                                        className="text-gray-400 hover:text-gray-600 text-sm hover:bg-gray-100 rounded-full w-5 h-5 flex items-center justify-center transition-colors"
-                                        title="Remove emoji"
-                                    >
-                                        ×
-                                    </button>
-                                </div>
-                            ) : (
-                                <Popover
-                                    opened={emojiPickerOpen}
-                                    onChange={setEmojiPickerOpen}
-                                    position="bottom"
-                                    withArrow
-                                    shadow="md"
-                                    classNames={{
-                                        dropdown: "p-1",
-                                    }}
-                                    radius="lg"
-                                >
-                                    <Popover.Target>
-                                        <Button
-                                            variant="subtle"
-                                            size="xs"
-                                            mt={4}
-                                            onClick={() =>
-                                                setEmojiPickerOpen(
-                                                    !emojiPickerOpen
-                                                )
-                                            }
-                                            className="!bg-transparent hover:!bg-gray-200 !text-gray-700 p-2"
-                                        >
-                                            <Smile size={16} />
-                                        </Button>
-                                    </Popover.Target>
-                                    <Popover.Dropdown>
-                                        <div className="p-2">
-                                            <Text
-                                                size="sm"
-                                                fw={500}
-                                                mb="xs"
-                                            >
-                                                Choose an emoji
-                                            </Text>
-                                            <div className="grid grid-cols-8 gap-1 max-h-48 overflow-y-auto">
-                                                {EMOJI_LIST.map(
-                                                    (emoji, index) => (
-                                                        <button
-                                                            key={index}
-                                                            onClick={() =>
-                                                                selectEmoji(
-                                                                    emoji
-                                                                )
-                                                            }
-                                                            className="w-8 h-8 text-lg hover:bg-gray-100 rounded transition-colors flex items-center justify-center !text-xl"
-                                                        >
-                                                            {emoji}
-                                                        </button>
-                                                    )
-                                                )}
-                                            </div>
-                                        </div>
-                                    </Popover.Dropdown>
-                                </Popover>
-                            )}
-                        </div>
+                    <div className="flex justify-between w-full items-start gap-1">
+                        <SelectEmoji
+                            selectedEmoji={selectedEmoji}
+                            removeEmoji={removeEmoji}
+                            emojiPickerOpen={emojiPickerOpen}
+                            setEmojiPickerOpen={setEmojiPickerOpen}
+                            selectEmoji={selectEmoji}
+                        />
 
                         {/* Text Editor Content */}
                         <RichTextEditor.Content
@@ -222,6 +156,80 @@ export default function Toolbar({
                     </div>
                 </RichTextEditor>
             </div>
+        </div>
+    );
+}
+
+function SelectEmoji({
+    selectedEmoji,
+    removeEmoji,
+    emojiPickerOpen,
+    setEmojiPickerOpen,
+    selectEmoji,
+}: {
+    selectedEmoji: string;
+    removeEmoji: () => void;
+    emojiPickerOpen: boolean;
+    setEmojiPickerOpen: (open: boolean) => void;
+    selectEmoji: (emoji: string) => void;
+}) {
+    return (
+        <div className="flex items-center gap-1 m-2">
+            {selectedEmoji ? (
+                <div className="flex items-center">
+                    <span className="text-2xl">{selectedEmoji}</span>
+                    <button
+                        onClick={removeEmoji}
+                        className="text-gray-400 hover:text-gray-600 text-sm hover:bg-gray-100 rounded-full w-5 h-5 flex items-center justify-center transition-colors"
+                        title="Remove emoji"
+                    >
+                        ×
+                    </button>
+                </div>
+            ) : (
+                <Popover
+                    opened={emojiPickerOpen}
+                    onChange={setEmojiPickerOpen}
+                    position="bottom"
+                    withArrow
+                    shadow="md"
+                    classNames={{
+                        dropdown: "p-1",
+                    }}
+                    radius="lg"
+                >
+                    <Popover.Target>
+                        <button
+                            onClick={() => setEmojiPickerOpen(!emojiPickerOpen)}
+                            className="!bg-transparent hover:!bg-gray-200 !text-gray-700 p-2 rounded-lg"
+                        >
+                            <Smile size={24} />
+                        </button>
+                    </Popover.Target>
+                    <Popover.Dropdown>
+                        <div className="p-2">
+                            <Text
+                                size="sm"
+                                fw={500}
+                                mb="xs"
+                            >
+                                Choose an emoji
+                            </Text>
+                            <div className="grid grid-cols-8 gap-1 max-h-48 overflow-y-auto">
+                                {EMOJI_LIST.map((emoji, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => selectEmoji(emoji)}
+                                        className="w-8 h-8 text-lg hover:bg-gray-100 rounded transition-colors flex items-center justify-center !text-xl"
+                                    >
+                                        {emoji}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </Popover.Dropdown>
+                </Popover>
+            )}
         </div>
     );
 }

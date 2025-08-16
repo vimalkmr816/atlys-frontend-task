@@ -25,7 +25,7 @@ export default function PostContainer({
 
     const handleLike = () => {
         if (!isLoggedIn) {
-            setIsLoginModalOpen(true);
+            setIsLoginModalOpen({ signIn: true, signUp: false });
             return;
         }
 
@@ -48,7 +48,7 @@ export default function PostContainer({
 
     const handleCommentSubmit = () => {
         if (!isLoggedIn) {
-            setIsLoginModalOpen(true);
+            setIsLoginModalOpen({ signIn: true, signUp: false });
             return;
         }
 

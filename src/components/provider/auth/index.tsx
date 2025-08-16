@@ -7,8 +7,9 @@ import {
     ReactNode,
 } from "react";
 import { useLocalStorage } from "@mantine/hooks";
-import LoginModal from "@/src/components/loginModal";
 import Cookies from "js-cookie";
+import SignInModal from "@/src/components/signInModal";
+import SignUpModal from "../../signupModal";
 
 const EXAMPLE_USER = {
     "demo@example.com": "password123",
@@ -20,8 +21,9 @@ interface AuthContextType {
     username: string;
     login: (user: { username: string; password: string }) => Promise<void>;
     logout: () => Promise<void>;
-    setIsLoginModalOpen: (value: boolean) => void;
-    isLoginModalOpen: boolean;
+    setIsLoginModalOpen: (value: { signIn: boolean; signUp: boolean }) => void;
+    isLoginModalOpen: { signIn: boolean; signUp: boolean };
+    signup: (user: { username: string; password: string }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,8 +31,26 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 function AuthProvider({ children }: { children: ReactNode }) {
     const [isLoginModalOpen, setIsLoginModalOpen] = useLocalStorage({
         key: "isLoginModalOpen",
-        defaultValue: false,
+        defaultValue: {
+            signIn: false,
+            signUp: false,
+        },
     });
+
+    // Listen for sign up modal closing, and if a new user was added, update localStorage
+    useEffect(() => {
+        if (!isLoginModalOpen.signUp) {
+            const users = JSON.parse(
+                localStorage.getItem("EXAMPLE_USER") || "{}"
+            );
+            if (Object.keys(users).length === 0) {
+                localStorage.setItem(
+                    "EXAMPLE_USER",
+                    JSON.stringify(EXAMPLE_USER)
+                );
+            }
+        }
+    }, [isLoginModalOpen.signUp]);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUsername] = useState("");
@@ -81,11 +101,27 @@ function AuthProvider({ children }: { children: ReactNode }) {
                 setUsername("");
                 resolve();
             } catch (error) {
-                console.log("======== ~ error:", error);
                 reject(error);
             }
         });
     };
+
+    function signup(user: { username: string; password: string }) {
+        return new Promise<void>((resolve, reject) => {
+            if (EXAMPLE_USER[user.username as keyof typeof EXAMPLE_USER]) {
+                reject(new Error("Username already exists"));
+                return;
+            }
+
+            EXAMPLE_USER[user.username as keyof typeof EXAMPLE_USER] =
+                user.password;
+
+            Cookies.set("isLoggedIn", "true", { expires: 7 });
+            Cookies.set("username", user.username, { expires: 7 });
+            setUsername(user.username);
+            resolve();
+        });
+    }
 
     const authValue: AuthContextType = {
         isLoggedIn,
@@ -94,14 +130,24 @@ function AuthProvider({ children }: { children: ReactNode }) {
         logout,
         setIsLoginModalOpen,
         isLoginModalOpen,
+        signup,
     };
 
     return (
         <AuthContext.Provider value={authValue}>
             {children}
-            <LoginModal
-                opened={isLoginModalOpen}
-                onClose={() => setIsLoginModalOpen(false)}
+            <SignInModal
+                opened={isLoginModalOpen.signIn}
+                onClose={() =>
+                    setIsLoginModalOpen({ signIn: false, signUp: false })
+                }
+            />
+
+            <SignUpModal
+                opened={isLoginModalOpen.signUp}
+                onClose={() =>
+                    setIsLoginModalOpen({ signIn: false, signUp: false })
+                }
             />
         </AuthContext.Provider>
     );

@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 import "@mantine/tiptap/styles.css";
-import PostFeed from "../../components/postFeed";
+import PostFeed from "@/src/components/postFeed";
 
 async function Home() {
     return (
