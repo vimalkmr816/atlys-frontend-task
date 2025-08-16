@@ -1,0 +1,207 @@
+export const EMOJI_LIST = [
+    "😀",
+    "😃",
+    "😄",
+    "😁",
+    "😆",
+    "😅",
+    "😂",
+    "🤣",
+    "😊",
+    "😇",
+    "🙂",
+    "🙃",
+    "😉",
+    "😌",
+    "😍",
+    "🥰",
+    "😘",
+    "😗",
+    "😙",
+    "😚",
+    "😋",
+    "😛",
+    "😝",
+    "😜",
+    "🤪",
+    "🤨",
+    "🧐",
+    "🤓",
+    "😎",
+    "🤩",
+    "🥳",
+    "😏",
+    "😒",
+    "😞",
+    "😔",
+    "😟",
+    "😕",
+    "🙁",
+    "☹️",
+    "😣",
+    "😖",
+    "😫",
+    "😩",
+    "🥺",
+    "😢",
+    "😭",
+    "😤",
+    "😠",
+    "😡",
+    "🤬",
+    "🤯",
+    "😳",
+    "🥵",
+    "🥶",
+    "😱",
+    "😨",
+    "😰",
+    "😥",
+    "😓",
+    "🤗",
+    "🤔",
+    "🤭",
+    "🤫",
+    "🤥",
+    "😶",
+    "😐",
+    "😑",
+    "😯",
+    "😦",
+    "😧",
+    "😮",
+    "😲",
+    "🥱",
+    "😴",
+    "🤤",
+    "😪",
+    "😵",
+    "🤐",
+    "🥴",
+    "🤢",
+    "🤮",
+    "🤧",
+    "😷",
+    "🤒",
+    "🤕",
+    "🤑",
+    "🤠",
+    "💩",
+    "👻",
+    "💀",
+    "☠️",
+    "👽",
+    "👾",
+    "🤖",
+    "😺",
+    "😸",
+    "😹",
+    "😻",
+    "😼",
+    "😽",
+];
+export const DEFAULT_EMOJI = "😊";
+
+export const SAMPLE_POSTS = [
+    {
+        id: "1",
+        author: {
+            name: "Theresa Webb",
+            title: "Senior Product Manager at TechCorp",
+            avatar: "T",
+        },
+        content:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        emoji: "😐",
+        timestamp: "5 mins ago",
+        likes: 24,
+        comments: [
+            {
+                id: "c1",
+                author: "Mike Chen",
+                content: "Great post! Thanks for sharing.",
+                timestamp: "2 mins ago",
+            },
+        ],
+    },
+    {
+        id: "2",
+        author: {
+            name: "John Doe",
+            title: "Full Stack Developer",
+            avatar: "J",
+        },
+        content:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        emoji: "🤞",
+        timestamp: "10 mins ago",
+        likes: 18,
+        comments: [
+            {
+                id: "c2",
+                author: "Alex Thompson",
+                content: "Interesting perspective!",
+                timestamp: "8 mins ago",
+            },
+        ],
+    },
+    {
+        id: "3",
+        author: {
+            name: "Jane Doe",
+            title: "UX Designer",
+            avatar: "J",
+        },
+        content:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        emoji: "💀",
+        timestamp: "15 mins ago",
+        likes: 31,
+        comments: [
+            {
+                id: "c3",
+                author: "Tom Wilson",
+                content: "Love this!",
+                timestamp: "12 mins ago",
+            },
+        ],
+    },
+];
+
+export const TOOLBAR_ITEMS = {
+    paragraph: "Paragraph",
+    formatting: ["Bold", "Italic", "Underline"],
+    lists: ["Bullet List", "Numbered List"],
+    code: "99",
+    delete: "Delete",
+};
+
+export const PLACEHOLDER_TEXT = "How are you feeling today?";
+
+export const ACTION_BUTTONS = {
+    add: "Plus",
+    microphone: "Microphone",
+    camera: "Camera",
+    send: "Send",
+};
+
+export const POST_ACTIONS = {
+    like: "Like",
+    reply: "Reply",
+    send: "Send",
+};
+
+export const COMMENT_PLACEHOLDER = "Write a comment...";
+
+export const DEFAULT_USER = {
+    name: "You",
+    title: "Software Developer",
+    avatar: "Y",
+};
+
+export const TIMESTAMPS = {
+    justNow: "Just now",
+    minsAgo: (mins: number) => `${mins} mins ago`,
+    hoursAgo: (hours: number) => `${hours} hours ago`,
+    daysAgo: (days: number) => `${days} days ago`,
+};
