@@ -29,12 +29,9 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 function AuthProvider({ children }: { children: ReactNode }) {
-    const [isLoginModalOpen, setIsLoginModalOpen] = useLocalStorage({
-        key: "isLoginModalOpen",
-        defaultValue: {
-            signIn: false,
-            signUp: false,
-        },
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState({
+        signIn: false,
+        signUp: false,
     });
 
     // Listen for sign up modal closing, and if a new user was added, update localStorage
